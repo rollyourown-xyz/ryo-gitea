@@ -1,10 +1,4 @@
 ---
-## The generic directory /var/containers/{{ project_id }}
-## for LXD container persistent storage must be created
-## Further project-specific container directories should be
-## added here
-## -----------------------------------------------------------
-
 ## Directories for project-specific LXD container persistent storage
 ## -----------------------------------------------------------------
 
@@ -14,11 +8,23 @@
     state: directory
     mode: '0755'
 
-## Create directory for project ABC container
 
-# Example
-# - name: Create a directory for <ABC> container mounts
-#   file:
-#     path: "/var/containers/{{ project_id }}/<ABC>"
-#     state: directory
-#     mode: '0755'
+### Gitea directories
+
+- name: Create a directory for gitea container persistent storage
+  file:
+    path: /var/containers/{{ project_id }}/gitea
+    state: directory
+    mode: '0755'
+
+- name: Create a directory for gitea container config
+  file:
+    path: /var/containers/{{ project_id }}/gitea/config
+    state: directory
+    mode: '0755'
+
+- name: Create a directory for gitea container data
+  file:
+    path: /var/containers/{{ project_id }}/gitea/data
+    state: directory
+    mode: '0755'
