@@ -1,0 +1,11 @@
+---
+# Download gitea binary to /usr/local/bin/gitea (making executable)
+#
+- name: Download gitea binary v{{ gitea_version }}
+  get_url:
+    mode: 0755
+    owner: root
+    group: root
+    dest: /usr/local/bin/gitea
+    url: https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64
+    force: yes

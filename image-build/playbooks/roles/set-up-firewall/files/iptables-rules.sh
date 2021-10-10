@@ -36,8 +36,11 @@ $IPT -A INPUT -p udp -m udp --dport 8301 -j ACCEPT
 $IPT -A INPUT -p tcp -m tcp --dport 8301 -j ACCEPT
 
 
-## <PROJECT> Rules
-##################
+## Gitea Rules
+##############
 
-# E.g. Allow HTTP
-$IPT -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+# Allow incoming Gitea HTTP connections on TCP port 3000
+$IPT -A INPUT -p tcp -m tcp --dport 3000 -j ACCEPT
+
+# Allow incoming Gitea SSH connections on TCP port 3022
+$IPT -A INPUT -p tcp -m tcp --dport 3022 -j ACCEPT

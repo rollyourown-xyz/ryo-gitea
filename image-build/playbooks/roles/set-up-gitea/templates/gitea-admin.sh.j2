@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Add admin user
+sudo -u gitea /usr/local/bin/gitea -w /var/lib/gitea/ -c /etc/gitea/app.ini admin user create --username {{ project_admin_username }} --password {{ project_admin_password }} --email {{ project_admin_email }} --admin --must-change-password=false

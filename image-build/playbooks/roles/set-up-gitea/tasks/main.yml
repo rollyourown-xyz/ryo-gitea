@@ -1,0 +1,201 @@
+---
+
+# Copy gitea-service consul service configuration file
+#
+- name: Copy gitea-services consul service configuration file
+  copy:
+    mode: 0640
+    owner: consul
+    group: consul
+    dest: /etc/consul.d/gitea-services.hcl
+    src: gitea-services.hcl
+    force: yes
+
+
+# Add user `gitea` to run gitea
+#
+- name: Add user `gitea` to run gitea
+  user:
+    name: gitea
+    comment: 'Gitea User'
+    create_home: yes
+    home: /home/gitea
+    system: yes
+    shell: /bin/bash
+    state: present
+
+
+# Create the directory /var/lib/gitea for gitea files
+#
+- name: Create the directory for gitea files
+  file:
+    owner: root
+    group: root
+    mode: 0755
+    path: /var/lib/gitea
+    state: directory
+
+
+# Create the directory /etc/gitea for gitea configuration
+#
+- name: Create the directory for gitea config
+  file:
+    owner: root
+    group: root
+    mode: 0755
+    path: /etc/gitea
+    state: directory
+
+
+# Create directory for bootstrapping
+#
+- name: Create the /usr/local/bootstrap directory
+  file:
+    path: /usr/local/bootstrap
+    state: directory
+    mode: 0755
+
+
+# Check existence of a previously generated JWT secret for Gitea
+#
+- name: Check existence of a previously generated JWT secret for Gitea
+  delegate_to: localhost
+  stat:
+    path: "{{ playbook_dir }}/../../configuration/gitea_jwt_secret_{{ host_id }}.yml"
+  register: gitea_jwt_secret_file
+
+
+# Load the JWT secret for Gitea from previously created file (if previously generated)
+#
+- name: Load the JWT secret for Gitea from previously created file
+  include_vars:
+    file: "{{ playbook_dir }}/../../configuration/gitea_jwt_secret_{{ host_id }}.yml"
+  when: gitea_jwt_secret_file.stat.exists
+
+
+# Generate a random string as JWT secret for Gitea (if not previously generated)
+# Note: Maximum 43 characters!
+#
+- name: Generate a random string as JWT secret for Gitea
+  shell: "tr -dc A-Za-z0-9 </dev/urandom | head -c 40"
+  register: gitea_jwt_secret_stdout
+  when: not gitea_jwt_secret_file.stat.exists
+
+
+# Assign the JWT secret for Gitea to the variable gitea_jwt_secret (if not previously generated)
+#
+- name: Assign the JWT secret for Gitea to the variable gitea_jwt_secret
+  set_fact:
+    gitea_jwt_secret: "{{ gitea_jwt_secret_stdout.stdout }}"
+  when: not gitea_jwt_secret_file.stat.exists
+
+
+# Write the JWT secret for Gitea to a file in the module configuration directory on the local machine (if not previously generated)
+#
+- name: Write the JWT secret for Gitea to a file in the module configuration directory
+  delegate_to: localhost
+  template:
+    mode: 0640
+    owner: "{{ local_non_root_user }}"
+    group: "{{ local_non_root_user }}"
+    dest: "{{ playbook_dir }}/../../configuration/gitea_jwt_secret_{{ host_id }}.yml"
+    src: gitea_jwt_secret.yml.j2
+    force: yes
+    backup: yes
+  when: not gitea_jwt_secret_file.stat.exists
+
+
+# Check existence of a previously generated mariadb user password for Gitea
+#
+- name: Check existence of a previously generated mariadb user password for Gitea
+  delegate_to: localhost
+  stat:
+    path: "{{ playbook_dir }}/../../configuration/mariadb_gitea_user_password_{{ host_id }}.yml"
+  register: mariadb_gitea_user_password_file
+
+
+# Load the mariadb user password for Gitea from previously created file (if previously generated)
+#
+- name: Load the mariadb user password for Gitea from previously created file
+  include_vars:
+    file: "{{ playbook_dir }}/../../configuration/mariadb_gitea_user_password_{{ host_id }}.yml"
+  when: mariadb_gitea_user_password_file.stat.exists
+
+
+# Generate a random string as mariadb user password for Gitea (if not previously generated)
+#
+- name: Generate a random string as mariadb user password for Gitea
+  shell: "tr -dc A-Za-z0-9 </dev/urandom | head -c 24"
+  register: mariadb_gitea_user_password_stdout
+  when: not mariadb_gitea_user_password_file.stat.exists
+
+
+# Assign the mariadb user password for Gitea to the variable mariadb_gitea_user_password (if not previously generated)
+#
+- name: Assign the mariadb user password for Gitea to the variable mariadb_gitea_user_password
+  set_fact:
+    mariadb_gitea_user_password: "{{ mariadb_gitea_user_password_stdout.stdout }}"
+  when: not mariadb_gitea_user_password_file.stat.exists
+
+
+# Write the mariadb user password for Gitea to a file in the module configuration directory on the local machine (if not previously generated)
+#
+- name: Write the mariadb user password for Gitea to a file in the module configuration directory
+  delegate_to: localhost
+  template:
+    mode: 0640
+    owner: "{{ local_non_root_user }}"
+    group: "{{ local_non_root_user }}"
+    dest: "{{ playbook_dir }}/../../configuration/mariadb_gitea_user_password_{{ host_id }}.yml"
+    src: mariadb_gitea_user_password.yml.j2
+    force: yes
+    backup: yes
+  when: not mariadb_gitea_user_password_file.stat.exists
+
+
+# Copy gitea config file to /usr/local/bootstrap/app.ini
+#
+- name: Copy gitea config file
+  template:
+    mode: 0664
+    owner: root
+    group: gitea
+    dest: /usr/local/bootstrap/app.ini
+    src: app.ini.j2
+    force: yes
+
+
+# Copy gitea service file definition /lib/systemd/system/gitea.service
+#
+- name: Copy gitea service file definition
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /lib/systemd/system/gitea.service
+    src: gitea.service
+    force: yes
+
+
+# Copy gitea admin user script
+#
+- name: Copy gitea admin user script
+  template:
+    mode: 0775
+    owner: root
+    group: gitea
+    dest: /usr/local/bootstrap/gitea-admin.sh
+    src: gitea-admin.sh.j2
+    force: yes
+
+
+# Copy gitea startup file
+#
+- name: Copy gitea startup script
+  copy:
+    mode: 0755
+    owner: root
+    group: root
+    dest: /usr/local/bootstrap/gitea-start.sh
+    src: gitea-start.sh
+    force: yes

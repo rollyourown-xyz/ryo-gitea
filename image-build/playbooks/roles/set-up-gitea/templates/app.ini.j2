@@ -1,0 +1,119 @@
+APP_NAME = Gitea @ {{ project_domain_name }}
+RUN_USER = gitea
+RUN_MODE = prod
+
+[ui.meta]
+AUTHOR      = {{ project_domain_name }} Gitea
+DESCRIPTION = {{ project_domain_name }} Gitea
+KEYWORDS    = go,git,self-hosted,gitea
+
+[security]
+INSTALL_LOCK         = true
+LOGIN_REMEMBER_DAYS  = 7
+COOKIE_USERNAME      = gitea_user
+COOKIE_REMEMBER_NAME = gitea_remember
+MIN_PASSWORD_LENGTH  = 12
+PASSWORD_COMPLEXITY  = lower,upper,digit
+DISABLE_GIT_HOOKS    = false
+
+[session]
+COOKIE_NAME = gitea_session
+
+[database]
+DB_TYPE = mysql
+HOST    = mariadb.service.consul:3306
+NAME    = gitea
+USER    = gitea-db-user
+PASSWD  = '{{ mariadb_gitea_user_password }}'
+CHARSET = utf8mb4
+
+[server]
+APP_DATA_PATH    = /var/lib/gitea/data
+OFFLINE_MODE     = true
+DOMAIN           = {{ project_git_domain_name }}
+PROTOCOL         = https
+CERT_FILE        = /etc/gitea/cert.pem
+KEY_FILE         = /etc/gitea/key.pem
+HTTP_PORT        = 3000
+ROOT_URL         = https://{{ project_git_domain_name }}/
+HTTP_ADDR        = 0.0.0.0
+DISABLE_SSH      = false
+START_SSH_SERVER = true
+SSH_DOMAIN       = {{ project_git_domain_name }}
+SSH_PORT         = 3022
+SSH_LISTEN_PORT  = 3022
+SSH_LISTEN_HOST  = 0.0.0.0
+SSH_ROOT_PATH    = /var/lib/gitea/.ssh
+LANDING_PAGE     = login
+LFS_START_SERVER = true
+LFS_JWT_SECRET   = {{ gitea_jwt_secret }}
+
+[repository]
+ROOT               = /var/lib/gitea/data/gitea-repositories
+DEFAULT_BRANCH     = main
+DEFAULT_REPO_UNITS = repo.code,repo.issues,repo.pulls,repo.projects,repo.releases
+
+[service]
+REGISTER_EMAIL_CONFIRM                        = false
+REGISTER_MANUAL_CONFIRM                       = false
+DISABLE_REGISTRATION                          = false
+ENABLE_CAPTCHA                                = false
+ALLOW_ONLY_INTERNAL_REGISTRATION              = false
+ALLOW_ONLY_EXTERNAL_REGISTRATION              = true
+REQUIRE_EXTERNAL_REGISTRATION_PASSWORD        = false
+REQUIRE_SIGNIN_VIEW                           = false
+ENABLE_NOTIFY_MAIL                            = true
+ENABLE_BASIC_AUTHENTICATION                   = false
+DEFAULT_KEEP_EMAIL_PRIVATE                    = true
+DEFAULT_ALLOW_CREATE_ORGANIZATION             = false
+DEFAULT_ENABLE_TIMETRACKING                   = true
+DEFAULT_ALLOW_ONLY_CONTRIBUTORS_TO_TRACK_TIME = true
+SHOW_REGISTRATION_BUTTON                      = false
+DEFAULT_USER_VISIBILITY                       = private
+ALLOWED_USER_VISIBILITY_MODES                 = public,limited,private
+DEFAULT_ORG_VISIBILITY                        = private
+DEFAULT_ORG_MEMBER_VISIBLE                    = false
+ALLOW_ONLY_INTERNAL_REGISTRATION              = false
+ALLOW_ONLY_EXTERNAL_REGISTRATION              = true
+
+[service.explore]
+DISABLE_USERS_PAGE = true
+
+[openid]
+ENABLE_OPENID_SIGNIN = false
+ENABLE_OPENID_SIGNUP = true
+WHITELISTED_URIS     = https://{{ project_keycloak_domain_name }}
+
+[oauth2_client]
+REGISTER_EMAIL_CONFIRM = false
+OPENID_CONNECT_SCOPES = profile
+ENABLE_AUTO_REGISTRATION = true
+USERNAME = username
+UPDATE_AVATAR = false
+ACCOUNT_LINKING = disabled
+
+[oauth2]
+ENABLE     = false
+
+[api]
+ENABLE_SWAGGER = false
+
+[mailer]
+ENABLED        = true
+HOST           = {{ project_smtp_server }}:{{ project_smtp_server_port }}
+IS_TLS_ENABLED = {{ project_smtp_server_ssl }}
+FROM           = no-reply@{{ project_domain_name }}
+USER           = {{ project_smtp_server_username }}
+PASSWD         = {{ project_smtp_server_password }}
+
+[picture]
+DISABLE_GRAVATAR        = true
+ENABLE_FEDERATED_AVATAR = false
+
+[log]
+ROOT_PATH = /var/lib/gitea/log
+
+[other]
+SHOW_FOOTER_BRANDING           = false
+SHOW_FOOTER_VERSION            = false
+SHOW_FOOTER_TEMPLATE_LOAD_TIME = false
