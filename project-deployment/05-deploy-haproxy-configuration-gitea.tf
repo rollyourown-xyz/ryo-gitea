@@ -12,7 +12,7 @@ module "deploy-gitea-ssh-haproxy-tcp-listener-configuration" {
 module "deploy-gitea-haproxy-backend-service" {
   source = "../../ryo-service-proxy/module-deployment/modules/deploy-haproxy-backend-services"
 
-  ssl_backend_services     = [ "gitea-http" ]
+  non_ssl_backend_services     = [ "gitea-http" ]
 }
 
 module "deploy-gitea-http-haproxy-acl-configuration" {
