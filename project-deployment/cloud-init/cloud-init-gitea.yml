@@ -1,0 +1,6 @@
+#cloud-config
+package_upgrade: false
+runcmd:
+  # Bootstrap gitea deployment
+  - /usr/local/bootstrap/gitea-start.sh
+  
