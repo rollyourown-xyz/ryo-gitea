@@ -3,7 +3,7 @@
 
 resource "lxd_container" "gitea" {
 
-  depends_on = [ module.deploy-gitea-database-and-user, module.deploy-gitea-oidc-client ]
+  depends_on = [ module.deploy-gitea-database-and-user ]
 
   remote     = var.host_id
   name       = "gitea"
