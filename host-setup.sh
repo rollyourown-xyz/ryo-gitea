@@ -65,7 +65,7 @@ fi
 ## Project-specific host setup
 if [ -f ""$SCRIPT_DIR"/configuration/"$hostname"_playbooks_executed" ]
 then
-   echo "Host setup for ryo-git project has already been done on "$hostname""
+   echo "Host setup for ryo-gitea-standalone project has already been done on "$hostname""
    echo ""
 else
    echo "Executing project-specific host setup playbooks on "$hostname""

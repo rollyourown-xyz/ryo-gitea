@@ -1,7 +1,7 @@
-#-------------------------------------------------------------
-# Packer template for building LXD container image for ryo-git
+#--------------------------------------------------------------------------
+# Packer template for building LXD container image for ryo-gitea-standalone
 # Ubuntu minimal images are used as base images
-#-------------------------------------------------------------
+#--------------------------------------------------------------------------
 
 ## Input variables
 ##
