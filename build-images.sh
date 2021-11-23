@@ -26,7 +26,7 @@ errorMessage()
 }
 
 # Default software package versions
-gitea_version='1.15.3'
+gitea_version='1.15.6'
 
 build_modules='false'
 
