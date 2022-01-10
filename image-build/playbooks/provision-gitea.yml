@@ -13,7 +13,7 @@
   roles:
     - role: upgrade-container
     - role: install-iptables
-    - role: install cron
+    - role: install-cron
     - role: install-consul
     - role: install-git
     - role: install-gitea
