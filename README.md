@@ -1,3 +1,3 @@
-# ryo-gitea-standalone
+# ryo-gitea
 
-Deploy a standalone Gitea git server using Ansible, Packer and Terraform.
+Deploy a Gitea git server using Ansible, Packer and Terraform.
