@@ -9,6 +9,18 @@
     mode: '0755'
 
 
+## Copy README into top-level directory for project containers
+
+- name: Copy README
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: "/var/containers/{{ project_id }}/README"
+    src: README
+    force: yes
+
+
 ### Gitea directories
 
 - name: Create a directory for gitea container persistent storage
