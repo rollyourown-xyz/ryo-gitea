@@ -4,6 +4,8 @@
 module "deploy-gitea-ssh-ingress-proxy-tcp-listener-configuration" {
   source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-configuration"
 
+  depends_on = [ lxd_container.gitea ]
+
   ingress-proxy_tcp_listeners = {
     3022 = {service = "gitea-ssh"}
   }
@@ -11,6 +13,8 @@ module "deploy-gitea-ssh-ingress-proxy-tcp-listener-configuration" {
 
 module "deploy-gitea-ingress-proxy-backend-service" {
   source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-backend-services"
+
+  depends_on = [ lxd_container.gitea ]
 
   non_ssl_backend_services     = [ "gitea-http" ]
 }
