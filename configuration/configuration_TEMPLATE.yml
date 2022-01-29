@@ -17,11 +17,6 @@ project_id: ryo-gitea
 # domain must be set to point to the public IPv4 address of your host server
 project_domain_name: <DOMAIN>
 
-# Set the git server subdomain to be used for the project - for example git.{{project_domain_name}}
-# The DNS A record for the project's git server domain must be set to point to the public IPv4 address
-# of your host server
-project_git_domain_name: <SUBDOMAIN>.<DOMAIN>
-
 # Enter a username for the administrator of this project, 
 # This will be the username of the gitea administrator account and will be
 # used for administrating users of the gitea server 

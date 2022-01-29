@@ -26,7 +26,6 @@ locals {
 locals {
   project_id                   = yamldecode(file(local.project_configuration))["project_id"]
   project_domain_name          = yamldecode(file(local.project_configuration))["project_domain_name"]
-  project_git_domain_name      = yamldecode(file(local.project_configuration))["project_git_domain_name"]
   project_admin_username       = yamldecode(file(local.project_configuration))["project_admin_username"]
   project_admin_email          = yamldecode(file(local.project_configuration))["project_admin_email"]
   project_smtp_server          = yamldecode(file(local.project_configuration))["project_smtp_server"]

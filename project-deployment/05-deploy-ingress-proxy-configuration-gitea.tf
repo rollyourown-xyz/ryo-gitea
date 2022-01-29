@@ -25,7 +25,7 @@ module "deploy-gitea-http-ingress-proxy-acl-configuration" {
   depends_on = [ module.deploy-gitea-ingress-proxy-backend-service ]
 
   ingress-proxy_host_only_acls = {
-    host-gitea-http = {host = local.project_git_domain_name}
+    host-gitea-http = {host = local.project_domain_name}
   }
 }
 
