@@ -1,15 +1,17 @@
 # Deploy Ingress Proxy configuration for gitea
 ##############################################
 
-module "deploy-gitea-ssh-ingress-proxy-tcp-listener-configuration" {
-  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-configuration"
+## The Ingress Proxy TCP listener is currently bypassed by a proxy device on the
+## gitea container
+# module "deploy-gitea-ssh-ingress-proxy-tcp-listener-configuration" {
+#   source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-configuration"
 
-  depends_on = [ lxd_container.gitea ]
+#   depends_on = [ lxd_container.gitea ]
 
-  ingress-proxy_tcp_listeners = {
-    3022 = {service = "gitea-ssh"}
-  }
-}
+#   ingress-proxy_tcp_listeners = {
+#     3022 = {service = "gitea-ssh"}
+#   }
+# }
 
 module "deploy-gitea-ingress-proxy-backend-service" {
   source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-backend-services"
