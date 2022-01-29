@@ -48,7 +48,8 @@ locals {
 # LXD variables
 locals {
   lxd_host_control_ipv4_address  = yamldecode(file(local.host_configuration))["host_control_ip"]
-  lxd_host_network_part         = yamldecode(file(local.host_configuration))["lxd_host_network_part"]
+  lxd_host_network_part          = yamldecode(file(local.host_configuration))["lxd_host_network_part"]
+  gitea_ip_addr_host_part        = yamldecode(file(local.project_configuration))["gitea_ip_addr_host_part"]
 }
 
 # Consul variables

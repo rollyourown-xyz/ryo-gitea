@@ -23,6 +23,20 @@ resource "lxd_container" "gitea" {
     properties = {
       name           = "eth0"
       network        = var.host_id
+      "ipv4.address" = join(".", [ local.lxd_host_network_part, local.gitea_ip_addr_host_part ])
+    }
+  }
+
+  ## Add proxy device for Gitea SSH interface
+  ### TCP Port 3022
+  device {
+    name = "proxy0"
+    type = "proxy"
+
+    properties = {
+      listen  = join("", [ "tcp:", local.lxd_host_control_ipv4_address, ":3022" ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.gitea_ip_addr_host_part, ":3022" ] )
+      nat     = "yes"
     }
   }
 

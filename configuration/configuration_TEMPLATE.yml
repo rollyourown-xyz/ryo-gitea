@@ -53,3 +53,17 @@ project_smtp_server_password: <PASSWORD>
 project_locales: [ "en", "de", "fr", "es" ]
 project_default_locale: en
 
+
+
+#-----------------------
+# DEFAULT Configuration
+#-----------------------
+
+# Container configuration
+#------------------------
+
+# Do not change this unless you know what you are doing
+# The gitea container requires a statically-defined IP address
+# to attach the TCP Port 3022 proxy device
+# This **must not** overlap with any other container deployed 
+gitea_ip_addr_host_part: 20
