@@ -38,6 +38,7 @@ then
 fi
 
 # Stop project containers
+#########################
 
 echo ""
 echo "Stopping project container..."
