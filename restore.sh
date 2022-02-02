@@ -241,11 +241,11 @@ else
       else
         # Request different backup stamp
         echo ""
-        echo "Please enter the stamp for the backup of module "$stamp" to restore."
+        echo "Please enter the stamp for the backup of module "$module" to restore."
         echo "Please double-check you are entering the correct stamp."
         echo ""
-        echo -n "What is the stamp for the backup of module "$stamp" to restore? "
-        read -e -p DIFFERENT_STAMP
+        echo -n "What is the stamp for the backup of module "$module" to restore? "
+        read -e -p "" DIFFERENT_STAMP
         echo ""
         echo "Restoring the module "$module" to "$hostname" from a backup with stamp "$DIFFERENT_STAMP""
         # Stop module containers
@@ -255,7 +255,7 @@ else
         # Start module containers
         /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/start-module-containers.sh -n "$hostname"
       fi
-      
+
     else
       echo ""
       echo "Skipping "$module" module restore."
