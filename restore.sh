@@ -79,7 +79,7 @@ echo " "
 echo "Do you want to restore a backup for "$PROJECT_ID" on "$hostname"? (y/n)"
 echo "Default is 'n'."
 echo -n "Restore backup? "
-read -e -p "[y/n]:" RESTORE_BACKUP
+read -e -p "[y/n]: " RESTORE_BACKUP
 RESTORE_BACKUP="${RESTORE_BACKUP:-"n"}"
 RESTORE_BACKUP="${RESTORE_BACKUP,,}"
 
@@ -105,7 +105,7 @@ else
   echo "!!! Default is 'no'."
   echo ""
   echo -n "Are you sure that you want to restore a backup? "
-  read -e -p "[yes/no]:" RESTORE_BACKUP_SURE
+  read -e -p "[yes/no]: " RESTORE_BACKUP_SURE
   RESTORE_BACKUP_SURE="${RESTORE_BACKUP_SURE:-"no"}"
   RESTORE_BACKUP_SURE="${RESTORE_BACKUP_SURE,,}"
   
@@ -127,7 +127,7 @@ else
     echo "!!! Default is 'no'."
     echo ""
     echo -n "Are you sure that the backup stamp is correct? "
-    read -e -p "[yes/no]:" RESTORE_BACKUP_STAMP_SURE
+    read -e -p "[yes/no]: " RESTORE_BACKUP_STAMP_SURE
     RESTORE_BACKUP_STAMP_SURE="${RESTORE_BACKUP_STAMP_SURE:-"no"}"
     RESTORE_BACKUP_STAMP_SURE="${RESTORE_BACKUP_STAMP_SURE,,}"
     
@@ -161,7 +161,7 @@ echo "If you choose 'n' (the default), you be able to select whether to restore 
 echo "and/or choose a different backup stamp."
 echo ""
 echo -n "Restore all modules with stamp "$stamp"? "
-read -e -p "[y/n]:" RESTORE_MODULES
+read -e -p "[y/n]: " RESTORE_MODULES
 RESTORE_MODULES="${RESTORE_MODULES:-"n"}"
 RESTORE_MODULES="${RESTORE_MODULES,,}"
 
@@ -169,8 +169,8 @@ RESTORE_MODULES="${RESTORE_MODULES,,}"
 while [ ! "$RESTORE_MODULES" == "y" ] && [ ! "$RESTORE_MODULES" == "n" ]
 do
   echo "Invalid option "${RESTORE_MODULES}". Please try again."
-  echo -n "Restore all modules (default is 'n')? "
-  read -e -p "[y/n]:" RESTORE_MODULES
+  echo -n "Restore all modules with stamp "$stamp" (default is 'n')? "
+  read -e -p "[y/n]: " RESTORE_MODULES
   RESTORE_MODULES="${RESTORE_MODULES:-"n"}"
   RESTORE_MODULES="${RESTORE_MODULES,,}"
 done
@@ -196,7 +196,7 @@ else
     echo "Checking whether to restore "$module" module."
     echo "Default is 'n'."
     echo -n "Restore "$module" module? "
-    read -e -p "[y/n]:" RESTORE_MODULE
+    read -e -p "[y/n]: " RESTORE_MODULE
     RESTORE_MODULE="${RESTORE_MODULE:-"n"}"
     RESTORE_MODULE="${RESTORE_MODULE,,}"
     
@@ -205,7 +205,7 @@ else
     do
       echo "Invalid option "${RESTORE_MODULE}". Please try again."
       echo -n "Restore "$module" module (default is 'n')? "
-      read -e -p "[y/n]:" RESTORE_MODULE
+      read -e -p "[y/n]: " RESTORE_MODULE
       RESTORE_MODULE="${RESTORE_MODULE:-"n"}"
       RESTORE_MODULE="${RESTORE_MODULE,,}"
     done
@@ -216,7 +216,7 @@ else
       echo "You will be restoring the module "$module" from a backup with stamp "$stamp"."
       echo "Please check the stamp "$stamp" carefully!"
       echo -n "Is the stamp "$stamp" correct for the module "$module"? (default is 'y') "
-      read -e -p "[y/n]:" STAMP_CORRECT
+      read -e -p "[y/n]: " STAMP_CORRECT
       STAMP_CORRECT="${STAMP_CORRECT:-"y"}"
       STAMP_CORRECT="${STAMP_CORRECT,,}"
 
@@ -225,7 +225,7 @@ else
       do
         echo "Invalid option "${STAMP_CORRECT}". Please try again."
         echo -n "Is the stamp "$stamp" correct for the module "$module"? (default is 'y') "
-        read -e -p "[y/n]:" STAMP_CORRECT
+        read -e -p "[y/n]: " STAMP_CORRECT
         STAMP_CORRECT="${STAMP_CORRECT:-"y"}"
         STAMP_CORRECT="${STAMP_CORRECT,,}"
       done

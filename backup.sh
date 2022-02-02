@@ -70,7 +70,7 @@ echo "If this is the only project deployed on the host "$hostname", then answer 
 echo "If you choose 'n', you will still be able to select whether to back up each module individually."
 echo ""
 echo -n "Back up all modules? "
-read -e -p "[y/n]:" BACKUP_MODULES
+read -e -p "[y/n]: " BACKUP_MODULES
 BACKUP_MODULES="${BACKUP_MODULES:-"y"}"
 BACKUP_MODULES="${BACKUP_MODULES,,}"
 
@@ -79,7 +79,7 @@ while [ ! "$BACKUP_MODULES" == "y" ] && [ ! "$BACKUP_MODULES" == "n" ]
 do
   echo "Invalid option "${BACKUP_MODULES}". Please try again."
   echo -n "Back up all modules (default is 'y')? "
-  read -e -p "[y/n]:" BACKUP_MODULES
+  read -e -p "[y/n]: " BACKUP_MODULES
   BACKUP_MODULES="${BACKUP_MODULES:-"y"}"
   BACKUP_MODULES="${BACKUP_MODULES,,}"
 done
@@ -105,7 +105,7 @@ else
     echo "Checking whether to back up "$module" module."
     echo "Default is 'y'."
     echo -n "Back up "$module" module? "
-    read -e -p "[y/n]:" BACKUP_MODULE
+    read -e -p "[y/n]: " BACKUP_MODULE
     BACKUP_MODULE="${BACKUP_MODULE:-"y"}"
     BACKUP_MODULE="${BACKUP_MODULE,,}"
     
@@ -114,7 +114,7 @@ else
     do
       echo "Invalid option "${BACKUP_MODULE}". Please try again."
       echo -n "Back up "$module" module (default is 'y')? "
-      read -e -p "[y/n]:" BACKUP_MODULE
+      read -e -p "[y/n]: " BACKUP_MODULE
       BACKUP_MODULE="${BACKUP_MODULE:-"y"}"
       BACKUP_MODULE="${BACKUP_MODULE,,}"
     done
