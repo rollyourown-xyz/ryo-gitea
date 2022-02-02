@@ -160,7 +160,7 @@ echo "up all modules WITH THE SAME STAMP "$stamp" as the project, then answer 'y
 echo "If you choose 'n' (the default), you be able to select whether to restore each module individually"
 echo "and/or choose a different backup stamp."
 echo ""
-echo -n "Restore all modules?"
+echo -n "Restore all modules with stamp "$stamp"? "
 read -e -p "[y/n]:" RESTORE_MODULES
 RESTORE_MODULES="${RESTORE_MODULES:-"n"}"
 RESTORE_MODULES="${RESTORE_MODULES,,}"
