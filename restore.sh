@@ -254,7 +254,8 @@ else
         /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/restore-module.sh -n "$hostname" -s "$DIFFERENT_STAMP"
         # Start module containers
         /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/start-module-containers.sh -n "$hostname"
-
+      fi
+      
     else
       echo ""
       echo "Skipping "$module" module restore."
