@@ -153,9 +153,12 @@ echo "Stopping project containers on "$hostname""
 # Ask whether to restore modules
 echo ""
 echo "Restore all modules?"
-echo -n "If this is the only project to be restored on the host "$hostname", and you have backed "
-echo -n "up all modules then answer 'y'"
-echo -n "If you choose 'n' (the default), you will still be able to select whether to restore each module individually"
+echo "If this is the only project to be restored on the host "$hostname", and you have backed "
+echo "up all modules WITH THE SAME STAMP "$stamp" as the project, then answer 'y'."
+echo "If you choose 'n' (the default), you be able to select whether to restore each module individually"
+echo "and/or choose a different backup stamp."
+echo ""
+echo -n "Restore all modules?"
 read -e -p "[y/n]:" RESTORE_MODULES
 RESTORE_MODULES="${RESTORE_MODULES:-"n"}"
 RESTORE_MODULES="${RESTORE_MODULES,,}"
@@ -206,12 +209,49 @@ else
     done
 
     if [ "$RESTORE_MODULE" == "y" ]; then
-      # Stop module containers
-      /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/stop-module-containers.sh -n "$hostname"
-      # Restore module
-      /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/restore-module.sh -n "$hostname" -s "$stamp"
-      # Start module containers
-      /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/start-module-containers.sh -n "$hostname"
+      # Check the module stamp
+      echo ""
+      echo "You will be restoring the module "$module" from a backup with stamp "$stamp"."
+      echo "Please check the stamp "$stamp" carefully!"
+      echo -n "Is the stamp "$stamp" correct for the module "$module"? (default is 'y') "
+      read -e -p "[y/n]:" STAMP_CORRECT
+      STAMP_CORRECT="${STAMP_CORRECT:-"y"}"
+      STAMP_CORRECT="${STAMP_CORRECT,,}"
+
+      # Check input
+      while [ ! "$STAMP_CORRECT" == "y" ] && [ ! "$STAMP_CORRECT" == "n" ]
+      do
+        echo "Invalid option "${STAMP_CORRECT}". Please try again."
+        echo -n "Is the stamp "$stamp" correct for the module "$module"? (default is 'y') "
+        read -e -p "[y/n]:" STAMP_CORRECT
+        STAMP_CORRECT="${STAMP_CORRECT:-"y"}"
+        STAMP_CORRECT="${STAMP_CORRECT,,}"
+      done
+
+      if [ "$STAMP_CORRECT" == "y" ]; then
+        # Stop module containers
+        /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/stop-module-containers.sh -n "$hostname"
+        # Restore module
+        /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/restore-module.sh -n "$hostname" -s "$stamp"
+        # Start module containers
+        /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/start-module-containers.sh -n "$hostname"
+
+      else
+        # Request different backup stamp
+        echo ""
+        echo "Please enter the stamp for the backup of module "$stamp" to restore."
+        echo "Please double-check you are entering the correct stamp."
+        echo ""
+        echo -n "What is the stamp for the backup of module "$stamp" to restore? "
+        read -e -p DIFFERENT_STAMP
+        echo ""
+        echo "Restoring the module "$module" to "$hostname" from a backup with stamp "$DIFFERENT_STAMP""
+        # Stop module containers
+        /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/stop-module-containers.sh -n "$hostname"
+        # Restore module
+        /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/restore-module.sh -n "$hostname" -s "$DIFFERENT_STAMP"
+        # Start module containers
+        /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/start-module-containers.sh -n "$hostname"
 
     else
       echo ""
