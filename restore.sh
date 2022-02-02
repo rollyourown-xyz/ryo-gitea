@@ -153,6 +153,8 @@ echo "Stopping project containers on "$hostname""
 # Ask whether to restore modules
 echo ""
 echo "Restore all modules?"
+echo "Modules for this project are: "$MODULES""
+echo ""
 echo "If this is the only project to be restored on the host "$hostname", and you have backed "
 echo "up all modules WITH THE SAME STAMP "$stamp" as the project, then answer 'y'."
 echo "If you choose 'n' (the default), you be able to select whether to restore each module individually"

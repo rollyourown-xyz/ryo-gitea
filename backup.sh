@@ -64,6 +64,8 @@ echo "Stopping project containers on "$hostname""
 # Ask whether to backup modules
 echo ""
 echo "Back up all modules?"
+echo "Modules for this project are: "$MODULES""
+echo ""
 echo "If this is the only project to be deployed on the host "$hostname", then answer 'y' (the default)."
 echo "If you choose 'n', you will still be able to select whether to back up each module individually."
 echo ""
