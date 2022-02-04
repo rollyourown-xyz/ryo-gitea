@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default project software versions
-gitea_version="1.15.11"
+gitea_version="1.16.0"
 
 # Script directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
