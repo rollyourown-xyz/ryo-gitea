@@ -14,7 +14,10 @@ WorkingDirectory=/var/lib/gitea/
 RuntimeDirectory=gitea
 ExecStart=/usr/local/bin/gitea web --config /etc/gitea/app.ini
 Restart=always
-Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea
+Environment="USER=gitea"
+Environment="HOME=/home/gitea"
+Environment="GITEA_WORK_DIR=/var/lib/gitea"
+Environment="GITEA_CUSTOM=/var/lib/gitea/custom"
 
 [Install]
 WantedBy=multi-user.target
