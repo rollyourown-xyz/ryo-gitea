@@ -20,9 +20,6 @@ if [ ! -f "/etc/gitea/BOOTSTRAPPED" ]; then
   # Copy gitea config file
   cp -p /usr/local/bootstrap/app.ini /etc/gitea/app.ini
   
-  # Copy gitea footer extra links file
-  cp -p /usr/local/bootstrap/extra_links_footer.tmpl /var/lib/gitea/custom/templates/custom/extra_links_footer.tmpl
-  
   # Run gitea migrate
   sudo -u gitea /usr/local/bin/gitea -w /var/lib/gitea/ -c /etc/gitea/app.ini migrate
   
@@ -36,6 +33,12 @@ if [ ! -f "/etc/gitea/BOOTSTRAPPED" ]; then
   touch  /etc/gitea/BOOTSTRAPPED
 
 fi
+
+# Copy gitea config file
+cp -p /usr/local/bootstrap/app.ini /etc/gitea/app.ini
+
+# Copy gitea footer extra links file
+cp -p /usr/local/bootstrap/extra_links_footer.tmpl /var/lib/gitea/custom/templates/custom/extra_links_footer.tmpl
 
 # Change to /etc/gitea diretory, generate new SSL certificates and make readable to gitea user 
 cd /etc/gitea
