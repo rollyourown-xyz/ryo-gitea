@@ -55,6 +55,24 @@ project_locales: [ "en", "de", "fr", "es" ]
 project_default_locale: en
 
 
+#-----------------------
+# Optional Configuration
+#-----------------------
+
+# Gitea extra footer links
+#-------------------------
+
+# Add extra footer links to the Gitea server web UI
+# Add further items to the list in the form shown
+# Always leave AT LEAST ONE link in this list
+gitea_footer_links:
+  - text: "rollyourown.xyz"
+    url: "https://rollyourown.xyz"
+  #- text: "About"
+  #  url: "https://example.com/about"
+  #- text: "Privacy Policy"
+  #  url: "https://example.com/privacy"
+
 
 #-----------------------
 # DEFAULT Configuration

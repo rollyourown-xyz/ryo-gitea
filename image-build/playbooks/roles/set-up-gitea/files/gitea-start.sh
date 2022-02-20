@@ -6,6 +6,10 @@ if [ ! -f "/etc/gitea/BOOTSTRAPPED" ]; then
   # Create sub-directories for gitea files (ownership gitea:gitea)
   mkdir /var/lib/gitea/custom
   chown gitea:gitea /var/lib/gitea/custom
+  mkdir /var/lib/gitea/custom/templates
+  chown gitea:gitea /var/lib/gitea/custom/templates
+  mkdir /var/lib/gitea/custom/templates/custom
+  chown gitea:gitea /var/lib/gitea/custom/templates/custom
   mkdir /var/lib/gitea/data
   chown gitea:gitea /var/lib/gitea/data
   mkdir /var/lib/gitea/log
@@ -15,6 +19,9 @@ if [ ! -f "/etc/gitea/BOOTSTRAPPED" ]; then
   
   # Copy gitea config file
   cp -p /usr/local/bootstrap/app.ini /etc/gitea/app.ini
+  
+  # Copy gitea footer extra links file
+  cp -p /usr/local/bootstrap/extra_links_footer.tmpl /var/lib/gitea/custom/templates/custom/extra_links_footer.tmpl
   
   # Run gitea migrate
   sudo -u gitea /usr/local/bin/gitea -w /var/lib/gitea/ -c /etc/gitea/app.ini migrate

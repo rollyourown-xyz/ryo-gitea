@@ -165,6 +165,18 @@
     force: yes
 
 
+# Copy gitea footer extra links file to /usr/local/bootstrap/extra_links_footer.tmpl
+#
+- name: Copy gitea config file
+  template:
+    mode: 0664
+    owner: root
+    group: gitea
+    dest: /usr/local/bootstrap/extra_links_footer.tmpl
+    src: extra_links_footer.tmpl.j2
+    force: yes
+
+
 # Copy gitea service file definition /lib/systemd/system/gitea.service
 #
 - name: Copy gitea service file definition
