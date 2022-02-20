@@ -167,7 +167,7 @@
 
 # Copy gitea footer extra links file to /usr/local/bootstrap/extra_links_footer.tmpl
 #
-- name: Copy gitea config file
+- name: Copy gitea footer extra links file
   template:
     mode: 0664
     owner: root
