@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # Roll Your Own Git Repository Server
 
 This is a [rollyourown.xyz project](https://rollyourown.xyz/rollyourown/projects/) to deploy a Gitea git server using Ansible, Packer and Terraform.

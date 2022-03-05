@@ -1,4 +1,6 @@
 #!/bin/sh
+# SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 # Add admin user
 sudo -u gitea /usr/local/bin/gitea -w /var/lib/gitea/ -c /etc/gitea/app.ini admin user create --username {{ project_admin_username }} --password {{ project_admin_password }} --email {{ project_admin_email }} --admin --must-change-password=false
