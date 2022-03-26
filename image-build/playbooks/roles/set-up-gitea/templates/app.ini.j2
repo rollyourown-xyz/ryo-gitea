@@ -100,6 +100,16 @@ ENABLE_FEDERATED_AVATAR = false
 
 [log]
 ROOT_PATH = /var/lib/gitea/log
+MODE = console
+LEVEL = Info
+ENABLE_SSH_LOG = true
+ENABLE_ACCESS_LOG = true
+ACCESS = file
+LOG_ROTATE = true
+DAILY_ROTATE = true
+MAX_DAYS = 14
+COMPRESS = true
+
 
 [other]
 SHOW_FOOTER_BRANDING           = false
