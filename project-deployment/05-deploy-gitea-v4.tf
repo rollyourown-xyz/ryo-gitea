@@ -3,8 +3,14 @@
 
 # Deploy gitea git server
 #########################
+##
+## Gitea git server for IPv4 host
+## With IPv4 proxy devices only
+##
 
-resource "lxd_container" "gitea" {
+resource "lxd_container" "gitea-v4" {
+
+  count = ( local.lxd_host_public_ipv6 == true ? 0 : 1 )
 
   depends_on = [ module.deploy-git-cert-domains, module.deploy-gitea-database-and-user ]
 
@@ -27,10 +33,11 @@ resource "lxd_container" "gitea" {
       name           = "eth0"
       network        = var.host_id
       "ipv4.address" = join(".", [ local.lxd_host_network_part, local.gitea_ip_addr_host_part ])
+      "ipv6.address" = join("", [ local.lxd_host_private_ipv6_prefix, "::", local.lxd_host_network_ipv6_subnet, ":", local.gitea_ip_addr_host_part ])
     }
   }
 
-  ## Add proxy device for Gitea SSH interface
+  ## Add proxy device for Gitea SSH interface (IPv4)
   ### TCP Port 3022
   device {
     name = "proxy0"
@@ -43,7 +50,7 @@ resource "lxd_container" "gitea" {
     }
   }
 
-  # Mount container directory for persistent storage for synapse configuration
+  # Mount container directory for persistent storage for gitea configuration
   device {
     name = "gitea-config"
     type = "disk"
@@ -56,7 +63,7 @@ resource "lxd_container" "gitea" {
     }
   }
 
-  # Mount container directory for persistent storage for synapse data
+  # Mount container directory for persistent storage for gitea data
   device {
     name = "gitea-data"
     type = "disk"
