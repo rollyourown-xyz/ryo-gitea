@@ -19,7 +19,7 @@
 module "deploy-gitea-ingress-proxy-backend-service" {
   source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-backend-services"
 
-  depends_on = [ lxd_container.gitea ]
+  depends_on = [ lxd_container.gitea-v4, lxd_container.gitea-v6 ]
 
   non_ssl_backend_services     = [ "gitea-http" ]
 }
