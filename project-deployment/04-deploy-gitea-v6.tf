@@ -24,7 +24,7 @@ resource "lxd_container" "gitea-v6" {
     "user.user-data" = file("cloud-init/cloud-init-gitea.yml")
   }
 
-  # Provide eth0 interface with dynamic IP address
+  # Provide eth0 interface with static IP address
   device {
     name = "eth0"
     type = "nic"
