@@ -76,6 +76,10 @@ gitea_footer_links:
   #- text: "Privacy Policy"
   #  url: "https://example.com/privacy"
 
+# Set this variable to true to build images on the remote host server. Otherwise,
+# images will be built on the control node and uploaded to the host server.
+remote_build: false
+
 
 #-----------------------
 # DEFAULT Configuration
